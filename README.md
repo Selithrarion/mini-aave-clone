@@ -1,57 +1,44 @@
-# Sample Hardhat 3 Beta Project (`node:test` and `viem`)
+# mini-aave-clone
 
-This project showcases a Hardhat 3 Beta project using the native Node.js test runner (`node:test`) and the `viem` library for Ethereum interactions.
+a lending protocol study, kinda like aave  
 
-To learn more about the Hardhat 3 Beta, please visit the [Getting Started guide](https://hardhat.org/docs/getting-started#getting-started-with-hardhat-3). To share your feedback, join our [Hardhat 3 Beta](https://hardhat.org/hardhat3-beta-telegram-group) Telegram group or [open an issue](https://github.com/NomicFoundation/hardhat/issues/new) in our GitHub issue tracker.
+## features
 
-## Project Overview
+*   core defi logic: deposit, borrow, withdraw, repay, liquidations and flash loans.
+*   dynamic nfts: you get an nft when you deposit and it changes based on your position.
+*   zk-proof: a private pool using circom and snarkjs (wip).
+*   tests: covered with hardhat 3.
+*   frontend: a basic vue + wagmi interface to interact with the protocol.
 
-This example project includes:
+## todo
 
-- A simple Hardhat configuration file.
-- Foundry-compatible Solidity unit tests.
-- TypeScript integration tests using [`node:test`](nodejs.org/api/test.html), the new Node.js native test runner, and [`viem`](https://viem.sh/).
-- Examples demonstrating how to connect to different types of networks, including locally simulating OP mainnet.
+*   finalize the zk-proof system with merkle trees for the private pool.
+*   polish the frontend and add merkle tree support
+* study https://github.com/tornadocash/tornado-core/blob/1ef6a263ac6a0e476d063fcb269a9df65a1bd56a/circuits/withdraw.circom
+* study https://github.com/mjerkov/membership/blob/main/scripts/proof.sh
 
-## Usage
+## how to run
 
-### Running Tests
+1.  start a local node in one terminal:
+    ```sh
+    npx hardhat node
+    ```
 
-To run all the tests in the project, execute the following command:
+2.  deploy the contracts in another terminal:
 
-```shell
-npx hardhat test
-```
+    ```sh
+    npx hardhat ignition deploy --network localhost ./ignition/modules/MiniAave.ts
+    ```
 
-You can also selectively run the Solidity or `node:test` tests:
+3.  mint some test tokens to your wallet (the first account from the node):
 
-```shell
-npx hardhat test solidity
-npx hardhat test nodejs
-```
+    ```sh
+    npx hardhat run scripts/mintTokens.ts --network localhost
+    ```
 
-### Make a deployment to Sepolia
-
-This project includes an example Ignition module to deploy the contract. You can deploy this module to a locally simulated chain or to Sepolia.
-
-To run the deployment to a local chain:
-
-```shell
-npx hardhat ignition deploy ignition/modules/Counter.ts
-```
-
-To run the deployment to Sepolia, you need an account with funds to send the transaction. The provided Hardhat configuration includes a Configuration Variable called `SEPOLIA_PRIVATE_KEY`, which you can use to set the private key of the account you want to use.
-
-You can set the `SEPOLIA_PRIVATE_KEY` variable using the `hardhat-keystore` plugin or by setting it as an environment variable.
-
-To set the `SEPOLIA_PRIVATE_KEY` config variable using `hardhat-keystore`:
-
-```shell
-npx hardhat keystore set SEPOLIA_PRIVATE_KEY
-```
-
-After setting the variable, you can run the deployment with the Sepolia network:
-
-```shell
-npx hardhat ignition deploy --network sepolia ignition/modules/Counter.ts
-```
+4.  run the frontend:
+    ```sh
+    cd frontend
+    pnpm install
+    pnpm dev
+    ```

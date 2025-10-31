@@ -1,3 +1,5 @@
+AGENTS.md
+
 # Node modules
 /node_modules
 
@@ -18,3 +20,6 @@
 
 # Hardhat coverage reports
 /coverage
+
+.idea
+ignition/deployments
